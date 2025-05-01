@@ -9,11 +9,10 @@ TOKEN = "7868052756:AAFrDwy8lGspRDXUhobjEmblwXEIgqNZVzs"
 ADMIN_ID = 7394295267
 DATA_FILE = "file_map.json"
 
-# بارگذاری فایل دیتابیس
-if os.path.exists(DATA_FILE):
+try:
     with open(DATA_FILE, "r") as f:
         file_map = json.load(f)
-else:
+except (FileNotFoundError, json.JSONDecodeError):
     file_map = {}
 
 def save_db():
@@ -78,3 +77,4 @@ app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.ATTACHMENT, handle_file))
 app.run_polling()
+
